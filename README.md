@@ -8,7 +8,7 @@ A lightweight and efficient **contact form email service** built with **Node.js*
 
 You can access the live demo of the contact form email service at:
 
-[https://contact-form-emailer.onrender.com](https://contact-form-emailer.onrender.com)
+[https://contact-form-emailer.onrender.com/api/get-in-touch](https://contact-form-emailer.onrender.com/api/api/get-in-touch)
 
 ---
 
