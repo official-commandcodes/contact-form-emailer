@@ -35,15 +35,16 @@ class SendEmail {
     });
   }
 
-  async #createEmailTemplateAndSend(subject, templateName, payload) {
+  async #createEmailTemplateAndSend(templateName, payload) {
     const source = fs.readFileSync(path.join(__dirname, `./${templateName}.handlebars`), "utf8");
     const compiledTemplate = handlebars.compile(source); // Another templating engine could be used
 
     const data = {
-      from: process.env.EMAIL,
-      to: payload.email,
-      subject: subject,
-      html: compiledTemplate(payload),
+      from: process.env.EMAIL, // Authenticated email (company's email)
+      to: process.env.EMAIL, // Company email receiving the message
+      subject: payload.fullName || "New message from website contact form", // Use a subject provided in the payload or a default
+      html: compiledTemplate(payload), // Email content generated using the template
+      replyTo: payload.email, // User's email for direct replies
     };
 
     this.#transporter().sendMail(data, (error, info) => {
@@ -59,7 +60,7 @@ class SendEmail {
 
   // Send Mail method
   async messageHandler(data) {
-    await this.#createEmailTemplateAndSend(data.fullName, "message-template", data);
+    await this.#createEmailTemplateAndSend("message-template", data);
   }
 }
 
