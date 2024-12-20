@@ -4,6 +4,7 @@ const express = require("express");
 const Joi = require("joi");
 const nodemailer = require("nodemailer");
 const handlebars = require("handlebars");
+const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
 
@@ -11,6 +12,12 @@ const app = express();
 
 // Parse request has json object
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 function validateInfo(data) {
   const schema = Joi.object({
